@@ -116,6 +116,16 @@ async function openInITermWithSplitPanes(
   // 2. If found, splits it vertically and updates the tab title to "name1 / name2 / ..."
   // 3. If not found, creates a new tab
   const script = `
+    -- Helper: check if a session name matches any known worktree
+    -- Matches if session name contains any worktree name (handles "name1 / name2" format)
+    on sessionIsWorktree(sessName, worktreeList)
+      if (count of worktreeList) = 0 then return false
+      repeat with wt in worktreeList
+        if sessName contains wt then return true
+      end repeat
+      return false
+    end sessionIsWorktree
+
     tell application "iTerm"
       activate
 
@@ -125,16 +135,6 @@ async function openInITermWithSplitPanes(
       set knownWorktrees to ${worktreeNamesListStr}
       set titleCmd to "printf '\\\\033]0;" & newWorktreeName & "\\\\007'"
       set fullCmdWithTitle to titleCmd & " && " & fullCmd
-
-      -- Helper: check if a session name matches any known worktree
-      -- Matches if session name contains any worktree name (handles "name1 / name2" format)
-      on sessionIsWorktree(sessName, worktreeList)
-        if (count of worktreeList) = 0 then return false
-        repeat with wt in worktreeList
-          if sessName contains wt then return true
-        end repeat
-        return false
-      end sessionIsWorktree
 
       -- Check if there's a window
       if (count of windows) = 0 then
