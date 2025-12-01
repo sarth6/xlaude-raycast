@@ -76,6 +76,7 @@ async function openInITerm(
       -- Write the command (title escape sequence is embedded)
       tell current session of current window
         write text ${JSON.stringify(fullCommandWithTitle)}
+        select
       end tell
     end tell
   `;
@@ -121,6 +122,7 @@ async function openInITermWithSplitPanes(
         delay 0.2
         tell current session of current window
           write text fullCmdWithTitle
+          select
         end tell
       else
         -- Look for a tab with fewer than maxPanes sessions that we can split
@@ -160,9 +162,10 @@ async function openInITermWithSplitPanes(
 
             delay 0.2
 
-            -- Write command to the new split pane
+            -- Write command to the new split pane and focus it
             tell newSession
               write text fullCmdWithTitle
+              select
             end tell
 
             -- Update the tab title to show all worktree names
@@ -185,6 +188,7 @@ async function openInITermWithSplitPanes(
             delay 0.2
             tell current session
               write text fullCmdWithTitle
+              select
             end tell
           end if
         end tell
