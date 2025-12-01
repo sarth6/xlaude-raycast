@@ -4,7 +4,7 @@
   <img src="https://github.com/user-attachments/assets/60f3e98b-329d-471c-9674-c5f418e741b2" width="128" height="128" alt="xlaude icon">
 </p>
 
-A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.com/anthropics/xlaude) worktrees—isolated git worktree environments for AI-assisted coding sessions.
+A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.com/Xuanwo/xlaude) worktrees—isolated git worktree environments for AI-assisted coding sessions.
 
 ## Why xlaude + Raycast? 🤖
 
@@ -34,7 +34,7 @@ A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.
 
 ```bash
 # Clone this repository
-git clone https://github.com/anthropics/xlaude-raycast.git
+git clone https://github.com/Xuanwo/xlaude-raycast.git
 cd xlaude-raycast
 
 # Install dependencies
