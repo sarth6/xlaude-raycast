@@ -199,7 +199,28 @@ export async function deleteWorktree(
     const { stdout } = await execAsync(`${xlaudePath} delete ${name}`, options);
     return { success: true, message: stdout.trim() };
   } catch (error) {
-    return { success: false, message: extractErrorMessage(error) };
+    const errorMsg = extractErrorMessage(error);
+
+    // If the branch wasn't found or worktree is orphaned, try to clean up
+    if (errorMsg.includes("branch") && errorMsg.includes("not found") ||
+        errorMsg.includes("not a valid") ||
+        errorMsg.includes("does not exist")) {
+      try {
+        // Run xlaude clean to remove orphaned entries from state
+        const workingDir = cwd || defaultRepoPath;
+        const options = getExecOptions({
+          cwd: workingDir,
+          extraEnv: { XLAUDE_YES: "1" },
+        });
+        await execAsync(`${xlaudePath} clean`, options);
+        return { success: true, message: `Cleaned up orphaned worktree: ${name}` };
+      } catch (cleanError) {
+        // If clean also fails, return the original error
+        return { success: false, message: errorMsg };
+      }
+    }
+
+    return { success: false, message: errorMsg };
   }
 }
 
