@@ -5,7 +5,7 @@ import {
   getPreferenceValues,
   LaunchProps,
 } from "@raycast/api";
-import { createWorktree } from "./utils/xlaude";
+import { createWorktree, listWorktrees } from "./utils/xlaude";
 import { openInTerminal } from "./utils/terminal";
 
 interface Preferences {
@@ -69,7 +69,11 @@ export default async function Command(
             ? xlaudePath
             : `${process.env.HOME}/.cargo/bin/xlaude`;
 
-        await openInTerminal(worktreePath, `${xlaude} open`, sanitizedTicketId);
+        // Get all worktree names for split pane validation
+        const worktrees = await listWorktrees();
+        const allWorktreeNames = worktrees.map((w) => w.name);
+
+        await openInTerminal(worktreePath, `${xlaude} open`, sanitizedTicketId, allWorktreeNames);
         await showHUD(`✅ ${sanitizedTicketId} ready`);
       } else {
         await showHUD(`✅ Created ${sanitizedTicketId} (couldn't auto-open)`);

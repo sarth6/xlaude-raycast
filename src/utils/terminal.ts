@@ -13,6 +13,7 @@ export async function openInTerminal(
   directory: string,
   command?: string,
   tabName?: string,
+  knownWorktreeNames?: string[],
 ): Promise<void> {
   const { terminal, useSplitPanes, maxPanesPerTab } =
     getPreferenceValues<Preferences>();
@@ -21,7 +22,7 @@ export async function openInTerminal(
   switch (terminal) {
     case "iterm":
       if (useSplitPanes) {
-        await openInITermWithSplitPanes(directory, command, tabName, maxPanes);
+        await openInITermWithSplitPanes(directory, command, tabName, maxPanes, knownWorktreeNames || []);
       } else {
         await openInITerm(directory, command, tabName);
       }
@@ -89,6 +90,7 @@ async function openInITermWithSplitPanes(
   command?: string,
   tabName?: string,
   maxPanes: number = 2,
+  knownWorktreeNames: string[] = [],
 ): Promise<void> {
   const cdCommand = `cd ${escapeForShell(directory)}`;
   const fullCommand = command ? `${cdCommand} && ${command}` : cdCommand;
@@ -101,8 +103,16 @@ async function openInITermWithSplitPanes(
     .replace(/\\/g, "\\\\")
     .replace(/"/g, '\\"');
 
+  // Build AppleScript list of known worktree names for validation
+  const safeWorktreeNames = knownWorktreeNames.map(
+    (name) => `"${name.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`
+  );
+  const worktreeNamesListStr = safeWorktreeNames.length > 0
+    ? `{${safeWorktreeNames.join(", ")}}`
+    : "{}";
+
   // This AppleScript:
-  // 1. Checks if there's a tab with fewer than maxPanes sessions
+  // 1. Checks if there's a tab with fewer than maxPanes sessions where ALL sessions are xlaude worktrees
   // 2. If found, splits it vertically and updates the tab title to "name1 / name2 / ..."
   // 3. If not found, creates a new tab
   const script = `
@@ -112,8 +122,19 @@ async function openInITermWithSplitPanes(
       set newWorktreeName to "${safeTabName}"
       set fullCmd to "${safeFullCommand}"
       set maxPanesAllowed to ${maxPanes}
+      set knownWorktrees to ${worktreeNamesListStr}
       set titleCmd to "printf '\\\\033]0;" & newWorktreeName & "\\\\007'"
       set fullCmdWithTitle to titleCmd & " && " & fullCmd
+
+      -- Helper: check if a session name matches any known worktree
+      -- Matches if session name contains any worktree name (handles "name1 / name2" format)
+      on sessionIsWorktree(sessName, worktreeList)
+        if (count of worktreeList) = 0 then return false
+        repeat with wt in worktreeList
+          if sessName contains wt then return true
+        end repeat
+        return false
+      end sessionIsWorktree
 
       -- Check if there's a window
       if (count of windows) = 0 then
@@ -125,7 +146,7 @@ async function openInITermWithSplitPanes(
           select
         end tell
       else
-        -- Look for a tab with fewer than maxPanes sessions that we can split
+        -- Look for a tab where ALL sessions are xlaude worktrees and has room for more
         set foundTabToSplit to false
         set targetTab to missing value
         set existingName to ""
@@ -133,18 +154,25 @@ async function openInITermWithSplitPanes(
         tell current window
           repeat with t in tabs
             -- Count sessions in this tab
-            set sessionCount to count of sessions of t
-            if sessionCount < maxPanesAllowed then
-              -- Get the current tab name from the first session
-              set tabSessions to sessions of t
-              set firstSession to item 1 of tabSessions
-              set sessName to name of firstSession
+            set tabSessions to sessions of t
+            set sessionCount to count of tabSessions
 
-              -- Use this tab if it has a name (was opened by us)
-              if sessName is not "" then
+            if sessionCount < maxPanesAllowed and sessionCount > 0 then
+              -- Check if ALL sessions in this tab are known worktrees
+              set allAreWorktrees to true
+              repeat with s in tabSessions
+                set sessName to name of s
+                if not my sessionIsWorktree(sessName, knownWorktrees) then
+                  set allAreWorktrees to false
+                  exit repeat
+                end if
+              end repeat
+
+              if allAreWorktrees then
+                set firstSession to item 1 of tabSessions
+                set existingName to name of firstSession
                 set foundTabToSplit to true
                 set targetTab to t
-                set existingName to sessName
                 exit repeat
               end if
             end if
@@ -258,6 +286,7 @@ function escapeForShell(str: string): string {
 export async function openXlaudeInTerminal(
   worktreeName: string,
   worktreePath: string,
+  knownWorktreeNames?: string[],
 ): Promise<void> {
   const { xlaudePath } = getPreferenceValues<Preferences>();
   // Use full path to xlaude, defaulting to common cargo install location
@@ -267,7 +296,7 @@ export async function openXlaudeInTerminal(
       : `${process.env.HOME || "~"}/.cargo/bin/xlaude`;
 
   // Open the worktree directory and run xlaude open, with tab named after worktree
-  await openInTerminal(worktreePath, `${xlaude} open`, worktreeName);
+  await openInTerminal(worktreePath, `${xlaude} open`, worktreeName, knownWorktreeNames);
 }
 
 /**

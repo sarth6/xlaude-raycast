@@ -10,7 +10,7 @@ import {
   openExtensionPreferences,
 } from "@raycast/api";
 import { useState } from "react";
-import { checkoutBranchOrPR } from "./utils/xlaude";
+import { checkoutBranchOrPR, listWorktrees } from "./utils/xlaude";
 import { openInTerminal } from "./utils/terminal";
 
 interface Preferences {
@@ -80,7 +80,10 @@ export default function Command(props: { arguments: Arguments }) {
             const pathMatch = result.message.match(/at\s+(.+)/);
             if (pathMatch) {
               const worktreePath = pathMatch[1].trim();
-              await openInTerminal(worktreePath, `${xlaude} open`);
+              // Get all worktree names for split pane validation
+              const worktrees = await listWorktrees();
+              const allWorktreeNames = worktrees.map((w) => w.name);
+              await openInTerminal(worktreePath, `${xlaude} open`, undefined, allWorktreeNames);
               await showHUD("Opened in terminal");
             }
           } catch (e) {

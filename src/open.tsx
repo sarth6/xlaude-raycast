@@ -20,7 +20,9 @@ export default function Command() {
         style: Toast.Style.Animated,
         title: "Opening worktree...",
       });
-      await openXlaudeInTerminal(worktree.name, worktree.path);
+      // Pass all known worktree names so split pane logic can verify tabs
+      const allWorktreeNames = (worktrees || []).map((w) => w.name);
+      await openXlaudeInTerminal(worktree.name, worktree.path, allWorktreeNames);
       await showToast({
         style: Toast.Style.Success,
         title: `Opened ${worktree.name}`,
