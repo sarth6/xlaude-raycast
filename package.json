@@ -1,0 +1,150 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "xlaude",
+  "title": "xlaude",
+  "description": "Manage Claude coding sessions with git worktrees using xlaude",
+  "icon": "extension-icon.svg",
+  "author": "sarth6",
+  "categories": ["Developer Tools", "Productivity"],
+  "license": "MIT",
+  "preferences": [
+    {
+      "name": "xlaudePath",
+      "title": "xlaude Binary Path",
+      "description": "Path to the xlaude binary (leave empty to use PATH)",
+      "type": "textfield",
+      "required": false,
+      "default": "xlaude",
+      "placeholder": "/usr/local/bin/xlaude"
+    },
+    {
+      "name": "defaultRepoPath",
+      "title": "Default Repository Path",
+      "description": "Base path where your repositories are located",
+      "type": "directory",
+      "required": false
+    },
+    {
+      "name": "terminal",
+      "title": "Terminal Application",
+      "description": "Which terminal to open worktrees in",
+      "type": "dropdown",
+      "required": false,
+      "default": "iterm",
+      "data": [
+        { "title": "iTerm", "value": "iterm" },
+        { "title": "Terminal", "value": "terminal" },
+        { "title": "Warp", "value": "warp" }
+      ]
+    },
+    {
+      "name": "useSplitPanes",
+      "title": "Use Split Panes (iTerm only)",
+      "description": "Open worktrees in split panes instead of new tabs",
+      "type": "checkbox",
+      "required": false,
+      "default": false,
+      "label": "Enable split panes"
+    },
+    {
+      "name": "maxPanesPerTab",
+      "title": "Max Panes per Tab",
+      "description": "Maximum number of split panes per tab (iTerm only)",
+      "type": "dropdown",
+      "required": false,
+      "default": "2",
+      "data": [
+        { "title": "2", "value": "2" },
+        { "title": "3", "value": "3" },
+        { "title": "4", "value": "4" }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "name": "list",
+      "title": "List Worktrees",
+      "description": "View all xlaude managed worktrees with session info",
+      "mode": "view"
+    },
+    {
+      "name": "open",
+      "title": "Open Worktree",
+      "description": "Open a worktree in your terminal with the configured agent",
+      "mode": "view"
+    },
+    {
+      "name": "create",
+      "title": "Create Worktree",
+      "description": "Create a new worktree and optionally start a session",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "name",
+          "placeholder": "worktree name (optional)",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "delete",
+      "title": "Delete Worktree",
+      "description": "Delete a worktree after confirmation",
+      "mode": "view"
+    },
+    {
+      "name": "checkout",
+      "title": "Checkout Branch/PR",
+      "description": "Checkout a branch or PR number into a new worktree",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "branchOrPr",
+          "placeholder": "branch name or PR #",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "create-from-ticket",
+      "title": "Create Worktree from Ticket",
+      "description": "Create a worktree using a ticket/issue ID and open Claude",
+      "mode": "no-view",
+      "arguments": [
+        {
+          "name": "ticketId",
+          "placeholder": "ENG-123",
+          "type": "text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "delete-all",
+      "title": "Delete All Worktrees",
+      "description": "Delete all xlaude managed worktrees after confirmation",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.64.0",
+    "@raycast/utils": "^1.10.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.8",
+    "@types/node": "20.10.0",
+    "@types/react": "18.2.37",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.2"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}

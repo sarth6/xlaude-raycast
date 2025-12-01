@@ -1,0 +1,41 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Claude brand colors: coral/terracotta gradient -->
+    <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D97757"/>
+      <stop offset="100%" style="stop-color:#E8926C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="url(#bg)"/>
+
+  <!-- Antenna -->
+  <line x1="256" y1="70" x2="256" y2="115" stroke="white" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="256" cy="58" r="22" fill="white"/>
+
+  <!-- Robot head -->
+  <rect x="116" y="115" width="280" height="220" rx="40" fill="white"/>
+
+  <!-- Eyes -->
+  <rect x="165" y="175" width="70" height="80" rx="16" fill="#D97757"/>
+  <rect x="277" y="175" width="70" height="80" rx="16" fill="#D97757"/>
+
+  <!-- Eye shine -->
+  <circle cx="215" cy="200" r="12" fill="white" opacity="0.6"/>
+  <circle cx="327" cy="200" r="12" fill="white" opacity="0.6"/>
+
+  <!-- Mouth -->
+  <rect x="176" y="290" width="160" height="24" rx="12" fill="#D97757"/>
+
+  <!-- Ears/side panels -->
+  <rect x="76" y="175" width="36" height="80" rx="10" fill="white"/>
+  <rect x="400" y="175" width="36" height="80" rx="10" fill="white"/>
+
+  <!-- Body -->
+  <rect x="146" y="355" width="220" height="100" rx="30" fill="white"/>
+
+  <!-- Body details -->
+  <circle cx="216" cy="405" r="20" fill="#D97757"/>
+  <circle cx="296" cy="405" r="20" fill="#D97757"/>
+</svg>
