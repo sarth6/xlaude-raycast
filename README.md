@@ -6,7 +6,7 @@
 
 A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.com/anthropics/xlaude) worktrees—isolated git worktree environments for AI-assisted coding sessions.
 
-## Why xlaude + Raycast?
+## Why xlaude + Raycast? 🤖
 
 **xlaude** lets you run multiple AI coding sessions in parallel (Claude, Codex, etc.), each in its own git worktree. This means you can:
 - Work on multiple features simultaneously without branch switching
@@ -19,7 +19,7 @@ A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.
 - Open any session directly in iTerm with your agent ready to go
 - Clean up finished sessions without touching the terminal
 
-## Installation
+## Installation 📦
 
 ### Prerequisites
 
@@ -47,7 +47,7 @@ Then start the extension:
 npm run dev
 ```
 
-## Commands
+## Commands 🛠️
 
 ### List Worktrees
 View all your active xlaude worktrees with session information. See the last message from each session and how long ago it was active.
@@ -82,9 +82,9 @@ Open Raycast preferences (`⌘ + ,`) and find the xlaude extension to configure:
 | **Use Split Panes** | Open worktrees in split panes instead of new tabs (iTerm only) |
 | **Max Panes per Tab** | Maximum split panes per tab: 2, 3, or 4 (iTerm only) |
 
-## Pro Tips
+## Pro Tips 🪄
 
-### Instant Ticket-to-Session Workflow
+### Instant Ticket-to-Session Workflow ✨
 
 Set up a Raycast Quicklink to instantly create a worktree from your clipboard:
 
@@ -108,7 +108,7 @@ Enable split panes in preferences to keep related worktrees side-by-side. When y
 
 The List Worktrees command shows the last message from each session. Use this to quickly remember what you were working on or check progress across multiple sessions.
 
-## Terminal Support
+## Terminal Support 💻
 
 | Terminal | Features |
 |----------|----------|
@@ -116,7 +116,7 @@ The List Worktrees command shows the last message from each session. Use this to
 | **Terminal.app** | Basic support: new tabs with custom titles |
 | **Warp** | Basic support: new tabs |
 
-## Development
+## Development 🧑‍💻
 
 ```bash
 # Run in development mode (hot reload)
