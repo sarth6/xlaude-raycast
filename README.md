@@ -14,7 +14,7 @@ A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.
 - Easily clean up when done
 
 **This Raycast extension** brings that workflow to your fingertips:
-- Launch new coding sessions in seconds with `⌘ + Space`
+- Launch new coding sessions in seconds from Raycast
 - See all active sessions and their last messages at a glance
 - Open any session directly in iTerm with your agent ready to go
 - Clean up finished sessions without touching the terminal
