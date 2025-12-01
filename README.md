@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <i>Because typing commands in a terminal is mass too much work.</i>
+  <i>Because typing commands in a terminal is way too much work.</i>
 </p>
 
 A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.com/Xuanwo/xlaude) worktrees—isolated git worktree environments for AI-assisted coding sessions.
