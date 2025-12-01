@@ -64,7 +64,7 @@ This is the good stuff. Set up a Raycast Quicklink to go from clipboard → codi
    ```
    raycast://extensions/YOUR_RAYCAST_USERNAME/xlaude/create-from-ticket?arguments=%7B%22ticketId%22%3A%22{clipboard}%22%7D
    ```
-3. Assign a hotkey (e.g., `⌘ + Shift + C`)
+3. Assign a hotkey (e.g., `⌘ + Shift + /` — pairs nicely with Linear's `⌘ + Shift + .` to copy branch name)
 
 Now: copy ticket → press hotkey → AI agent ready. You're welcome.
 
