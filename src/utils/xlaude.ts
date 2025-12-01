@@ -138,6 +138,19 @@ function extractErrorMessage(error: unknown): string {
   return String(error);
 }
 
+async function fetchAndPullMain(cwd: string): Promise<void> {
+  const options = getExecOptions({ cwd });
+  // Fetch latest from origin and pull to ensure we're up to date
+  // This runs before xlaude create which requires being on a base branch
+  try {
+    await execAsync("git fetch origin", options);
+    await execAsync("git pull --ff-only", options);
+  } catch {
+    // Ignore errors - fetch/pull might fail if offline or no upstream
+    // xlaude create will still work, just from the current state
+  }
+}
+
 export async function createWorktree(
   name?: string,
   cwd?: string,
@@ -147,6 +160,12 @@ export async function createWorktree(
 
   try {
     const workingDir = cwd || defaultRepoPath;
+
+    // Fetch and pull latest before creating worktree
+    if (workingDir) {
+      await fetchAndPullMain(workingDir);
+    }
+
     const options = getExecOptions({
       cwd: workingDir,
       extraEnv: { XLAUDE_NO_AUTO_OPEN: "1" },
@@ -193,6 +212,12 @@ export async function checkoutBranchOrPR(
 
   try {
     const workingDir = cwd || defaultRepoPath;
+
+    // Fetch latest before checkout to ensure branch/PR refs are available
+    if (workingDir) {
+      await fetchAndPullMain(workingDir);
+    }
+
     const options = getExecOptions({
       cwd: workingDir,
       extraEnv: { XLAUDE_NO_AUTO_OPEN: "1" },
