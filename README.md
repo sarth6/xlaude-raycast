@@ -49,26 +49,31 @@ npm run dev
 
 ## Commands 🛠️
 
+### Create Worktree from Ticket ⭐
+The flagship command. Type a ticket ID (e.g., `ENG-123`) and instantly:
+1. Create a new git worktree named after your ticket
+2. Open iTerm with the worktree directory
+3. Launch your AI agent, ready to code
+
+Perfect for Linear, Jira, GitHub Issues, or any ticket-based workflow. Combine with a [Quicklink](#instant-ticket-to-session-workflow-) to go from clipboard → coding in one hotkey.
+
 ### List Worktrees
-View all your active xlaude worktrees with session information. See the last message from each session and how long ago it was active.
+View all active worktrees at a glance. Shows the last message from each AI session and how recently it was active—great for remembering where you left off.
 
 ### Open Worktree
-Select a worktree to open in your terminal. Automatically runs `xlaude open` to resume your session.
+Resume any session. Opens iTerm (with split pane support) and runs `xlaude open` to pick up where you left off.
 
 ### Create Worktree
-Create a new worktree for a fresh coding session. Optionally provide a name, or let xlaude generate one.
+Start a fresh session with a custom name, or let xlaude generate one for you.
 
 ### Checkout Branch/PR
-Check out an existing branch or GitHub PR number into a new worktree. Great for code review or picking up someone else's work.
-
-### Create Worktree from Ticket
-Instantly create a worktree named after a ticket ID (e.g., `ENG-123`). Perfect for Linear, Jira, or any ticket-based workflow.
+Pull an existing branch or GitHub PR into a new worktree. Ideal for code review or picking up a teammate's work.
 
 ### Delete Worktree
-Remove a worktree when you're done. Automatically closes any associated iTerm tabs/panes.
+Clean up when done. Automatically closes any iTerm tabs/panes running that worktree.
 
 ### Delete All Worktrees
-Nuclear option—remove all worktrees at once. Useful for weekly cleanup.
+Nuclear option—wipe all worktrees at once. Useful for weekly cleanup.
 
 ## Configuration
 
