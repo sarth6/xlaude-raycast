@@ -41,14 +41,6 @@ cd xlaude-raycast
 npm install
 ```
 
-Before running, update `package.json` with your Raycast username:
-
-1. Find your Raycast username at [raycast.com/account](https://raycast.com/account)
-2. Open `package.json` and replace `YOUR_RAYCAST_USERNAME` with your username:
-   ```json
-   "author": "your-actual-username",
-   ```
-
 Then start the extension:
 
 ```bash
