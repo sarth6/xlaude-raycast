@@ -4,20 +4,36 @@
   <img src="https://github.com/user-attachments/assets/60f3e98b-329d-471c-9674-c5f418e741b2" width="128" height="128" alt="xlaude icon">
 </p>
 
+<p align="center">
+  <i>Because typing commands in a terminal is mass too much work.</i>
+</p>
+
 A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.com/Xuanwo/xlaude) worktrees—isolated git worktree environments for AI-assisted coding sessions.
 
-## Why xlaude + Raycast? 🤖
+## The Origin Story 😴
 
-**xlaude** lets you run multiple AI coding sessions in parallel (Claude, Codex, etc.), each in its own git worktree. This means you can:
-- Work on multiple features simultaneously without branch switching
-- Keep each agent's context isolated per task
-- Easily clean up when done
+I discovered [xlaude](https://github.com/Xuanwo/xlaude) and [Raycast](https://raycast.com) around the same time. xlaude was amazing—multiple Claude/Codex sessions in parallel, each in its own git worktree!
 
-**This Raycast extension** brings that workflow to your fingertips:
-- Launch new coding sessions in seconds from Raycast
-- See all active sessions and their last messages at a glance
-- Open any session directly in iTerm with your agent ready to go
-- Clean up finished sessions without touching the terminal
+But then I realized I'd have to:
+1. Open a terminal
+2. Navigate to my repo
+3. Type `xlaude create ENG-123`
+4. Wait for it to finish
+5. Type `xlaude open`
+
+Five whole steps? In this economy? Unacceptable.
+
+So I built this Raycast extension. Now I copy a ticket ID from Linear, press one hotkey, and I'm coding. The way it should be.
+
+## The Dream Workflow ✨
+
+```
+1. Copy ticket ID from Linear/Jira/GitHub
+2. Press hotkey
+3. You're coding with AI
+```
+
+That's it. That's the whole thing. [Set up the Quicklink](#the-one-hotkey-setup-) and never think about it again.
 
 ## Installation 📦
 
@@ -33,125 +49,66 @@ A [Raycast](https://raycast.com) extension for managing [xlaude](https://github.
 ### Install the Extension
 
 ```bash
-# Clone this repository
 git clone https://github.com/Xuanwo/xlaude-raycast.git
 cd xlaude-raycast
-
-# Install dependencies
 npm install
-```
-
-Then start the extension:
-
-```bash
 npm run dev
 ```
 
-## Commands 🛠️
+## The One-Hotkey Setup 🪄
 
-### Create Worktree from Ticket ⭐
-The flagship command. Type a ticket ID (e.g., `ENG-123`) and instantly:
-1. Create a new git worktree named after your ticket
-2. Open iTerm with the worktree directory
-3. Launch your AI agent, ready to code
-
-Perfect for Linear, Jira, GitHub Issues, or any ticket-based workflow. Combine with a [Quicklink](#instant-ticket-to-session-workflow-) to go from clipboard → coding in one hotkey.
-
-### List Worktrees
-View all active worktrees at a glance. Shows the last message from each AI session and how recently it was active—great for remembering where you left off.
-
-### Open Worktree
-Resume any session. Opens iTerm (with split pane support) and runs `xlaude open` to pick up where you left off.
-
-### Create Worktree
-Start a fresh session with a custom name, or let xlaude generate one for you.
-
-### Checkout Branch/PR
-Pull an existing branch or GitHub PR into a new worktree. Ideal for code review or picking up a teammate's work.
-
-### Delete Worktree
-Clean up when done. Automatically closes any iTerm tabs/panes running that worktree.
-
-### Delete All Worktrees
-Nuclear option—wipe all worktrees at once. Useful for weekly cleanup.
-
-## Configuration
-
-Open Raycast preferences (`⌘ + ,`) and find the xlaude extension to configure:
-
-| Setting | Description |
-|---------|-------------|
-| **xlaude Binary Path** | Path to xlaude (default: searches common locations like `~/.cargo/bin`) |
-| **Default Repository Path** | Your main repository where worktrees are created |
-| **Terminal Application** | iTerm, Terminal.app, or Warp |
-| **Use Split Panes** | Open worktrees in split panes instead of new tabs (iTerm only) |
-| **Max Panes per Tab** | Maximum split panes per tab: 2, 3, or 4 (iTerm only) |
-
-## Pro Tips 🪄
-
-### Instant Ticket-to-Session Workflow ✨
-
-Set up a Raycast Quicklink to instantly create a worktree from your clipboard:
+This is the good stuff. Set up a Raycast Quicklink to go from clipboard → coding:
 
 1. Open Raycast Settings → Extensions → xlaude
-2. Create a Quicklink with this URL (replace `YOUR_RAYCAST_USERNAME` with your Raycast username—find it at [raycast.com/account](https://raycast.com/account)):
+2. Create a Quicklink with this URL (replace `YOUR_RAYCAST_USERNAME` with your Raycast username):
    ```
    raycast://extensions/YOUR_RAYCAST_USERNAME/xlaude/create-from-ticket?arguments=%7B%22ticketId%22%3A%22{clipboard}%22%7D
    ```
 3. Assign a hotkey (e.g., `⌘ + Shift + C`)
 
-Now your workflow becomes:
-1. Copy a ticket ID from Linear/Jira/GitHub (e.g., `ENG-456`)
-2. Press your hotkey
-3. A new worktree is created and your agent opens, ready to work on that ticket
+Now: copy ticket → press hotkey → AI agent ready. You're welcome.
 
-### Split Pane Workflow
+## All Commands 🛠️
 
-Enable split panes in preferences to keep related worktrees side-by-side. When you open a second worktree, it automatically splits into the existing tab. The tab title updates to show both worktree names (e.g., `feature-a / feature-b`).
+| Command | What it does |
+|---------|-------------|
+| **Create from Ticket** ⭐ | The star of the show. Ticket ID → worktree → iTerm → AI agent. One command. |
+| **List Worktrees** | See all your sessions with last messages. Remember what you were doing. |
+| **Open Worktree** | Resume a session. Supports iTerm split panes. |
+| **Create Worktree** | Start fresh with a custom name. |
+| **Checkout Branch/PR** | Pull a branch or PR into a new worktree. Great for reviews. |
+| **Delete Worktree** | Clean up. Auto-closes iTerm tabs too. |
+| **Delete All** | Nuclear option. Weekly cleanup in one click. |
 
-### Session Visibility
+## Configuration ⚙️
 
-The List Worktrees command shows the last message from each session. Use this to quickly remember what you were working on or check progress across multiple sessions.
+Open Raycast preferences (`⌘ + ,`) → xlaude:
+
+| Setting | Description |
+|---------|-------------|
+| **xlaude Binary Path** | Usually auto-detected from `~/.cargo/bin` |
+| **Default Repository Path** | Your main repo for worktrees |
+| **Terminal Application** | iTerm, Terminal.app, or Warp |
+| **Use Split Panes** | Side-by-side worktrees in iTerm |
+| **Max Panes per Tab** | 2, 3, or 4 panes per tab |
 
 ## Terminal Support 💻
 
-| Terminal | Features |
-|----------|----------|
-| **iTerm** | Full support: tab naming, split panes, auto-close on delete |
-| **Terminal.app** | Basic support: new tabs with custom titles |
-| **Warp** | Basic support: new tabs |
+| Terminal | Tab Naming | Split Panes | Auto-close |
+|----------|:----------:|:-----------:|:----------:|
+| **iTerm** | ✅ | ✅ | ✅ |
+| **Terminal.app** | ✅ | ❌ | ❌ |
+| **Warp** | ✅ | ❌ | ❌ |
 
 ## Development 🧑‍💻
 
 ```bash
-# Run in development mode (hot reload)
-npm run dev
-
-# Type check
-npx tsc --noEmit
-
-# Lint
-npm run lint
-
-# Build for production
-npm run build
+npm run dev      # Development mode
+npm run build    # Production build
+npm run lint     # Lint
+npx tsc --noEmit # Type check
 ```
-
-## Publishing to Raycast Store
-
-To publish this extension to the Raycast Store:
-
-1. Create a Raycast account at [raycast.com](https://raycast.com)
-2. Find your Raycast username at [raycast.com/account](https://raycast.com/account) (it's the handle shown under your profile, not your display name)
-3. Update the `author` field in `package.json` to your Raycast username
-4. Run `npm run publish`
-
-Note: The `author` field must exactly match your registered Raycast username for store publishing to work.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT - see [LICENSE](LICENSE) for details.
+MIT
