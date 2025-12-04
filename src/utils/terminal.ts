@@ -4,7 +4,7 @@ import { runAppleScript } from "@raycast/utils";
 interface Preferences {
   xlaudePath: string;
   defaultRepoPath?: string;
-  terminal: "iterm" | "terminal" | "warp";
+  terminal: "iterm" | "terminal" | "warp" | "kitty";
   useSplitPanes?: boolean;
   maxPanesPerTab?: string;
 }
@@ -32,6 +32,9 @@ export async function openInTerminal(
       break;
     case "warp":
       await openInWarp(directory, command, tabName);
+      break;
+    case "kitty":
+      await openInKitty(directory, command, tabName);
       break;
     default:
       await openInITerm(directory, command, tabName);
@@ -269,6 +272,41 @@ async function openInWarp(
           keystroke "t" using command down
           delay 0.2
           keystroke ${JSON.stringify(fullCommand)}
+          keystroke return
+        end tell
+      end tell
+    end tell
+  `;
+
+  await runAppleScript(script);
+}
+
+async function openInKitty(
+  directory: string,
+  command?: string,
+  tabName?: string,
+): Promise<void> {
+  const cdCommand = `cd ${escapeForShell(directory)}`;
+  const fullCommand = command ? `${cdCommand} && ${command}` : cdCommand;
+
+  // Set tab title using escape sequence like iTerm
+  const titleEscapeSeq = tabName
+    ? `printf '\\033]0;${tabName.replace(/'/g, "\\'")}\\007'`
+    : "";
+  const fullCommandWithTitle = titleEscapeSeq
+    ? `${titleEscapeSeq} && ${fullCommand}`
+    : fullCommand;
+
+  // Kitty uses ⌘T for new tab on macOS
+  const script = `
+    tell application "kitty"
+      activate
+      delay 0.3
+      tell application "System Events"
+        tell process "kitty"
+          keystroke "t" using command down
+          delay 0.2
+          keystroke ${JSON.stringify(fullCommandWithTitle)}
           keystroke return
         end tell
       end tell
