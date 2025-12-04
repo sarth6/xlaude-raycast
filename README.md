@@ -88,7 +88,7 @@ Open Raycast preferences (`⌘ + ,`) → xlaude:
 |---------|-------------|
 | **xlaude Binary Path** | Usually auto-detected from `~/.cargo/bin` |
 | **Default Repository Path** | Your main repo for worktrees |
-| **Terminal Application** | iTerm, Terminal.app, or Warp |
+| **Terminal Application** | iTerm, Terminal.app, Warp, or Kitty |
 | **Use Split Panes** | Side-by-side worktrees in iTerm |
 | **Max Panes per Tab** | 2, 3, or 4 panes per tab |
 
@@ -99,6 +99,7 @@ Open Raycast preferences (`⌘ + ,`) → xlaude:
 | **iTerm** | ✅ | ✅ | ✅ |
 | **Terminal.app** | ✅ | ❌ | ❌ |
 | **Warp** | ✅ | ❌ | ❌ |
+| **Kitty** | ✅ | ❌ | ❌ |
 
 ## Development 🧑‍💻
 

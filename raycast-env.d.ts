@@ -13,7 +13,7 @@ type ExtensionPreferences = {
   /** Default Repository Path - Base path where your repositories are located */
   "defaultRepoPath"?: string,
   /** Terminal Application - Which terminal to open worktrees in */
-  "terminal": "iterm" | "terminal" | "warp",
+  "terminal": "iterm" | "terminal" | "warp" | "kitty",
   /** Use Split Panes (iTerm only) - Open worktrees in split panes instead of new tabs */
   "useSplitPanes": boolean,
   /** Max Panes per Tab - Maximum number of split panes per tab (iTerm only) */

@@ -34,7 +34,8 @@
       "data": [
         { "title": "iTerm", "value": "iterm" },
         { "title": "Terminal", "value": "terminal" },
-        { "title": "Warp", "value": "warp" }
+        { "title": "Warp", "value": "warp" },
+        { "title": "Kitty", "value": "kitty" }
       ]
     },
     {
